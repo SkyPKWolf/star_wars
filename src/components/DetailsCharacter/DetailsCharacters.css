@@ -1,0 +1,19 @@
+.DetailsCharacters {
+  position: fixed;
+  padding: 50px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  background-color: rgb(17, 81, 199);
+}
+
+.DetailsCharacters__info {
+  padding: 10px;
+  font-size: 20px;
+}
+
+.btn__close {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
