@@ -13,8 +13,17 @@
     <title>React App</title>
   </head>
   <body class="body">
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: '856885485186770',
+          autoLogAppEvents : true,
+          xfbml: true,
+          version: 'v11.0'
+        });
+      };
+    </script>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <div id="root"></div>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v11.0" nonce="uvJpeqbN"></script>
   </body>
 </html>

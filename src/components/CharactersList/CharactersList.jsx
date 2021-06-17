@@ -84,7 +84,7 @@ export const CharactersList = () => {
                   </div>
                   <Link
                     className="btn"
-                    to={`/characters/${name}`}
+                    to={`/star_wars/characters/${name}`}
                     name={name}
                     onClick={({ target }) => {
                       setSelectedCharacter(target.name)
@@ -96,7 +96,7 @@ export const CharactersList = () => {
             )})}
           </ul>
         )}
-      <Route path={`/characters/${selectedCharacter}`}>
+      <Route path={`/star_wars/characters/${selectedCharacter}`}>
         {selectedCharacter 
           && <DetailsCharacters
             selectedCharacter={preparedCharacters.find(character => character.name === selectedCharacter)}

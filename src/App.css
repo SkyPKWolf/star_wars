@@ -2,3 +2,10 @@
   color: wheat;
   margin: 10px;
 }
+
+.fb-login-button {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform:translate(-50%, -50%);
+}

@@ -35,7 +35,6 @@ export const DetailsCharacters = ({
       films,
       vehicles
     }
-    console.log(selectedCharacter)
     setCharacter(updatedCharacter);
   };
 
@@ -55,7 +54,7 @@ export const DetailsCharacters = ({
           className="btn btn__close"
           type="button"
           onClick={clearSelectCharacter}
-          to="/characters"
+          to="/star_wars/characters"
         >
           X
         </Link>
