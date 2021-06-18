@@ -1,4 +1,5 @@
 import { Link, Route } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
 
 import { CharactersList } from './components/CharactersList';
 
@@ -13,19 +14,34 @@ const App = () => {
         if (response && response.status === 'connected') {
             //eslint-disable-next-line
             FB.logout(function(response) {
-                console.log('bye')
+              console.log('bye')
+              // eslint-disable-next-line no-restricted-globals
+              location.href = "/#/star_wars";
             });
         }
     });
   }
 
+  function redirect (){
+    //eslint-disable-next-line
+    FB.getLoginStatus(function(response) {
+      if (response && response.status === 'connected') {
+        // eslint-disable-next-line no-restricted-globals
+        location.href = "/#/star_wars/home";
+      }
+  });
+  };
+
   return (
     <div className="App">
       <header className="App-header">
           <Route path="/star_wars/home">
-            <button onClick={fbLogoutUser}>
+            <Link 
+              className="btn"
+              onClick={fbLogoutUser}
+            >
               Log out
-            </button>
+            </Link>
             <h1 className="main_title">Star Wars</h1>
             <nav className="menu">
               <ul>
@@ -44,16 +60,12 @@ const App = () => {
             <CharactersList/>
           </Route>
           <Route path="/star_wars" exact>
-            <div 
-              className="fb-login-button" 
-              data-width="" 
-              data-size="large" 
-              data-button-type="continue_with" 
-              data-layout="default" 
-              data-auto-logout-link="false" 
-              data-use-continue-as="false"
-            >
-            </div>
+          <FacebookLogin
+            appId="856885485186770"
+            autoLoad={true}
+            fields="name,email,picture"
+            callback={redirect} 
+          />
           </Route>
       </header>
     </div>
