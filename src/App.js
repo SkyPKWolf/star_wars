@@ -16,7 +16,7 @@ const App = () => {
             FB.logout(function(response) {
               console.log('bye')
               // eslint-disable-next-line no-restricted-globals
-              location.href = "/#/star_wars";
+              location.href = "/star_wars/";
             });
         }
     });
@@ -27,7 +27,7 @@ const App = () => {
     FB.getLoginStatus(function(response) {
       if (response && response.status === 'connected') {
         // eslint-disable-next-line no-restricted-globals
-        location.href = "/#/star_wars/home";
+        location.href = "/star_wars/#/home/";
       }
   });
   };
@@ -35,19 +35,19 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-          <Route path="/star_wars/home">
-            <Link 
+          <Route path="/home">
+            <button 
               className="btn"
               onClick={fbLogoutUser}
             >
               Log out
-            </Link>
+            </button>
             <h1 className="main_title">Star Wars</h1>
             <nav className="menu">
               <ul>
                 <li>
                   <Link 
-                    to="/star_wars/characters"
+                    to="/characters"
                     className="btn"
                   >
                     Characters
@@ -56,10 +56,12 @@ const App = () => {
               </ul>
             </nav>
           </Route>
-          <Route path="/star_wars/characters">
-            <CharactersList/>
+          <Route 
+            path="/characters/:characterName?"
+            component={CharactersList}
+          >
           </Route>
-          <Route path="/star_wars" exact>
+          <Route path="/" exact>
           <FacebookLogin
             appId="856885485186770"
             autoLoad={true}

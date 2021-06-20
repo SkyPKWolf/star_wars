@@ -10,12 +10,13 @@ import { LoaderExampleText } from '../Loader';
 import 'semantic-ui-css/semantic.min.css';
 import './CharactersList.css';
 
-export const CharactersList = () => {
+export const CharactersList = ({match}) => {
   const [characters, setCharacters] = useState([]);
   const [searchName, setSearchName] = useState('');
-  const [selectedCharacter, setSelectedCharacter] = useState('');
   const [preparedCharacters, setPreparedCharacters] = useState([]);
   const [loader, setLoader] = useState(false);
+
+  const characterName = match.params.characterName;
 
   const loadCharacters = async() => {
     setLoader(true);
@@ -25,13 +26,11 @@ export const CharactersList = () => {
     setLoader(false);
   };
 
-  const correctedUrl = url => url.replace('http', 'https');
-
   const UpdateCharacters = async() => {
     setLoader(true);
     const updateCharacters = await Promise.all(characters
       .map(async character => {
-        const homeworld = await getPlanets(correctedUrl(character.homeworld));
+        const homeworld = await getPlanets(character.homeworld);
         return {
           ...character, 
           homeworld
@@ -41,7 +40,6 @@ export const CharactersList = () => {
     setLoader(false);
   };
 
-  const clearSelectCharacter = () => setSelectedCharacter({});
 
   useEffect(() => {
     loadCharacters();
@@ -84,11 +82,8 @@ export const CharactersList = () => {
                   </div>
                   <Link
                     className="btn"
-                    to={`/star_wars/characters/${name}`}
+                    to={`/characters/${name}`}
                     name={name}
-                    onClick={({ target }) => {
-                      setSelectedCharacter(target.name)
-                    }}
                   >
                     Show Details
                   </Link>
@@ -96,13 +91,10 @@ export const CharactersList = () => {
             )})}
           </ul>
         )}
-      <Route path={`/star_wars/characters/${selectedCharacter}`}>
-        {selectedCharacter 
-          && <DetailsCharacters
-            selectedCharacter={preparedCharacters.find(character => character.name === selectedCharacter)}
-            clearSelectCharacter={clearSelectCharacter}
-            correctedUrl={correctedUrl}
-          />}
+      <Route path={`/characters/${characterName}`}>
+        <DetailsCharacters
+          selectedCharacter={preparedCharacters.find(character => character.name === characterName)}
+        />
       </Route>
 
     </div>
