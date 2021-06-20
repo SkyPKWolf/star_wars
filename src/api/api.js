@@ -11,7 +11,7 @@ export const getData = async(endPoint) => {
   return result;
 };
 
-export const getPlanets = async(url) => {
+export const getInfo = async(url) => {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`${response.status} - ${response.statusText}`);

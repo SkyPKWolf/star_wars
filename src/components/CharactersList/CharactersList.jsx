@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, Route } from 'react-router-dom';
 
 import { getCharacters } from '../../api/characters';
-import { getPlanets } from '../../api/api';
+import { getInfo } from '../../api/api';
 
 import { DetailsCharacters } from '../DetailsCharacter/DetailsCharacters';
 import { LoaderExampleText } from '../Loader';
@@ -30,7 +30,7 @@ export const CharactersList = ({match}) => {
     setLoader(true);
     const updateCharacters = await Promise.all(characters
       .map(async character => {
-        const homeworld = await getPlanets(character.homeworld);
+        const homeworld = await getInfo(character.homeworld);
         return {
           ...character, 
           homeworld

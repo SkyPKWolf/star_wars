@@ -14,12 +14,3 @@ export const getCharacters = async() => {
   }
   return allCharacters;
 }
-
-
-export const getHomeWorld = async(id) => {
-  const endPoint = id.slice(21);
-  const result = await getData(endPoint);
-
-  return result;
-}
-

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getPlanets } from '../../api/api';
+import { getInfo } from '../../api/api';
 import PropTypes from 'prop-types';
 
 import './DetailsCharacters.css'
@@ -16,14 +16,14 @@ export const DetailsCharacters = ({
     if(selectedCharacter !== []) {
       const films = await Promise.all(selectedCharacter.films
         .map(async film => {
-          const objFilms = await getPlanets(film);
+          const objFilms = await getInfo(film);
           return {
             ...objFilms
           };    
         }));
       const vehicles = await Promise.all(selectedCharacter.vehicles
         .map(async vehicle => {
-          const objVehicles = await getPlanets(vehicle);
+          const objVehicles = await getInfo(vehicle);
           return {
             ...objVehicles
           };    
@@ -41,7 +41,6 @@ export const DetailsCharacters = ({
 
 
   useEffect(() => {
-    console.log(selectedCharacter);
     if(selectedCharacter) {
       UpdateCharacter();
     }
