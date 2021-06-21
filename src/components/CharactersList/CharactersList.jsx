@@ -11,38 +11,52 @@ import 'semantic-ui-css/semantic.min.css';
 import './CharactersList.css';
 
 export const CharactersList = ({match}) => {
-  const [characters, setCharacters] = useState([]);
-  const [searchName, setSearchName] = useState('');
-  const [preparedCharacters, setPreparedCharacters] = useState([]);
-  const [loader, setLoader] = useState(false);
+  const useLocalStorage = (key, initialValue) => {
+    const [characters, setCharacters] = useState (
+      JSON.parse(localStorage.getItem(key)) || initialValue,
+    );
 
+    const save = (value) => {
+      setCharacters(value);
+      localStorage.setItem(key, JSON.stringify(value));
+    };
+
+    return [ characters, save ]
+  }
+
+  const [searchName, setSearchName] = useState('');
+  const [preparedCharacters, setPreparedCharacters] = useLocalStorage('preparedCharacters', []);
+  const [characters, setCharacters] = useLocalStorage('characters', []);
+  const [loader, setLoader] = useState(false);
   const characterName = match.params.characterName;
 
   const loadCharacters = async() => {
-    setLoader(true);
     const charactersFromServer = await getCharacters();
 
     setCharacters(charactersFromServer);
-    setLoader(false);
   };
 
   const UpdateCharacters = async() => {
-    setLoader(true);
-    const updateCharacters = await Promise.all(characters
-      .map(async character => {
-        const homeworld = await getInfo(character.homeworld);
-        return {
-          ...character, 
-          homeworld
-        };    
-      }));
-    setPreparedCharacters(updateCharacters);
-    setLoader(false);
+    if(preparedCharacters.length === 0) {
+      setLoader(true);
+      const updateCharacters = await Promise.all(characters
+        .map(async character => {
+          const homeworld = await getInfo(character.homeworld);
+          return {
+            ...character, 
+            homeworld
+          };    
+        }));
+      setPreparedCharacters(updateCharacters);
+      setLoader(false);
+    }
   };
 
 
   useEffect(() => {
-    loadCharacters();
+    if(characters.length === 0) {
+      loadCharacters();
+    }
   }, []);
 
   useEffect(() => {
