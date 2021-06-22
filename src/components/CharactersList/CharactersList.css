@@ -38,3 +38,12 @@
   background-color: rgb(102, 194, 224);
   outline: none;
 }
+
+.btn_like {
+  margin: 10px;
+}
+
+.btn_like--active {
+  margin: 10px;
+  background-color: greenyellow;
+}

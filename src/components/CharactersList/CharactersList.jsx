@@ -78,31 +78,32 @@ export const CharactersList = ({match}) => {
         ? <LoaderExampleText />
         : (
           <ul className="CharactersList__list">
-            {preparedCharacters.filter(character => character.name.includes(searchName))
-              .map(({name, gender, homeworld, url}) => {
-                return (
-                <li
-                  key={url}
-                  className="CharactersList__item"
-                >
-                  <div>
-                    {`Name: ${name}`}
-                  </div>
-                  <div>
-                    {`Gender: ${gender}`}
-                  </div>
-                  <div>
-                    {`Home World: ${homeworld.name}`}
-                  </div>
-                  <Link
-                    className="btn"
-                    to={`/characters/${name}`}
-                    name={name}
+            {preparedCharacters.filter(character => 
+              (character.name.toLowerCase()).includes(searchName.toLowerCase()))
+                .map(({name, gender, homeworld, url}) => {
+                  return (
+                  <li
+                    key={url}
+                    className="CharactersList__item"
                   >
-                    Show Details
-                  </Link>
-                </li>
-            )})}
+                    <div>
+                      {`Name: ${name}`}
+                    </div>
+                    <div>
+                      {`Gender: ${gender}`}
+                    </div>
+                    <div>
+                      {`Home World: ${homeworld.name}`}
+                    </div>
+                    <Link
+                      className="btn"
+                      to={`/characters/${name}`}
+                      name={name}
+                    >
+                      Show Details
+                    </Link>
+                  </li>
+              )})}
           </ul>
         )}
       <Route path={`/characters/${characterName}`}>
